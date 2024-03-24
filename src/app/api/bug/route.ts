@@ -1,9 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { mailerService } from "~/services/mailing.service";
+
+type BugMailBody = {
+  from: string;
+  replyTo: string;
+  bugSubject: string;
+  content: string;
+};
 
 export async function POST(request: NextRequest) {
   try {
-    const { from, replyTo, bugSubject, content } = await request.json();
+    const { from, replyTo, bugSubject, content } =
+      (await request.json()) as Awaited<BugMailBody>;
 
     // send email
     const result = await mailerService.sendBugMail({
