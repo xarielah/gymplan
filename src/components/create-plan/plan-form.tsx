@@ -95,13 +95,7 @@ export default function PlanForm() {
     if (isDirty) window.onbeforeunload = () => true;
   }, [isDirty]);
 
-  // useEffect(() => {
-  //   if (fields.length === 0) {
-  //     append(defaultWorkout);
-  //   }
-  // }, []);
-
-  const submitForm = async (data: Plan) => {
+  const submitForm = async (data: Plan): Promise<void> => {
     try {
       const response = await fetch("/api/plan", {
         body: JSON.stringify(data),
@@ -111,15 +105,19 @@ export default function PlanForm() {
       if (response.status === 201) {
         setIsSubmitSuccessful(true);
         reset();
-        const json = await response.json();
-        router.push(json.data.id || "/");
+        const json = (await response.json()) as Awaited<{
+          data: { id: string };
+        }>;
+        if (json?.data?.id) {
+          router.push(json.data.id ?? "/");
+        }
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const addActivity = () => append(defaultWorkoutAppend);
+  const addActivity = (): void => append(defaultWorkoutAppend);
 
   if (isSubmitSuccessful) return <AllGood />;
   return (
@@ -174,7 +172,7 @@ export default function PlanForm() {
             {fields.map((item, index) => (
               <AccordionItem
                 heading={`#${index + 1} - 
-            ${watch(`workouts.${index}.workoutType`) || `מקטע אימון`}`}
+            ${watch(`workouts.${index}.workoutType`) ?? `מקטע אימון`}`}
                 key={item.id}
                 id={item.id}
               >

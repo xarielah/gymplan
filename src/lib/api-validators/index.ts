@@ -1,12 +1,12 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
 export default async function validate(
   schema: z.AnyZodObject | z.ZodOptional<z.AnyZodObject>,
-  req: NextRequest
+  req: NextRequest,
 ) {
   try {
-    let body = await req.json();
+    const body = await req.json();
     await schema.parseAsync(body);
     NextResponse.next();
   } catch (error: any) {
@@ -17,12 +17,12 @@ export default async function validate(
           status: 400,
           fieldErrors,
         },
-        { status: 400 }
+        { status: 400 },
       );
     } else {
       return NextResponse.json(
         { status: 500, message: error.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
   }

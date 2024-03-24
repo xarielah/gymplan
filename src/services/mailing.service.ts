@@ -1,6 +1,6 @@
 import { render } from "@react-email/components";
 import nodeMailer from "nodemailer";
-import SMTPTransport from "nodemailer/lib/smtp-transport";
+import type SMTPTransport from "nodemailer/lib/smtp-transport";
 import BugEmail from "~/components/email/bug-email";
 
 class MailerService {

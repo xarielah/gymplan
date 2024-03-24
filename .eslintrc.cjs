@@ -10,9 +10,10 @@ const config = {
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
-    "plugin:@typescript-eslint/stylistic-type-checked"
+    //"plugin:@typescript-eslint/stylistic-type-checked"
   ],
   "rules": {
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/consistent-type-imports": [
@@ -28,7 +29,11 @@ const config = {
         "argsIgnorePattern": "^_"
       }
     ],
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-misused-promises": [
       "error",
       {
